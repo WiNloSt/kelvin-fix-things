@@ -30,6 +30,11 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
     },
     fields: [
       {
+        name: 'enabled',
+        type: 'checkbox',
+        defaultValue: true,
+      },
+      {
         type: 'row',
         fields: [
           {
