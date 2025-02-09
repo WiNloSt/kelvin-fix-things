@@ -22,6 +22,14 @@ const nextConfig = {
   },
   reactStrictMode: true,
   redirects,
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    })
+
+    return config
+  },
 }
 
 export default withPayload(nextConfig)

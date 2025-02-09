@@ -1,29 +1,16 @@
-import clsx from 'clsx'
 import React from 'react'
+import LightBulb from './bulb-light-icon.svg'
+import { robotoCondense } from '@/app/(frontend)/font'
+import clsx from 'clsx'
 
-interface Props {
-  className?: string
-  loading?: 'lazy' | 'eager'
-  priority?: 'auto' | 'high' | 'low'
-}
-
-export const Logo = (props: Props) => {
-  const { loading: loadingFromProps, priority: priorityFromProps, className } = props
-
-  const loading = loadingFromProps || 'lazy'
-  const priority = priorityFromProps || 'low'
-
+export const Logo = () => {
   return (
-    /* eslint-disable @next/next/no-img-element */
-    <img
-      alt="Payload Logo"
-      width={193}
-      height={34}
-      loading={loading}
-      fetchPriority={priority}
-      decoding="async"
-      className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-logo-light.svg"
-    />
+    <div className={clsx(robotoCondense.className, 'text-[32px]')} style={{ lineHeight: 1 }}>
+      KELVIN FIX
+      <div className="mt-[5px]">
+        <LightBulb className={clsx('h-[32px] inline-block mt-[-6px]')} />
+        <span className="inline-block ml-3">THINGS</span>
+      </div>
+    </div>
   )
 }
