@@ -54,7 +54,6 @@ export default async function Page({ params: paramsPromise }: Args) {
   })
 
   if (!page || !page.enabled) {
-    console.log({ page, url })
     return <PayloadRedirects url={url} />
   }
 
