@@ -50,18 +50,12 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { slug = 'home' } = await paramsPromise
   const url = '/' + slug
 
-  let page: PageType | null
-
-  page = await queryPageBySlug({
+  const page: PageType | null = await queryPageBySlug({
     slug,
   })
 
-  // Remove this code once your website is seeded
-  if (!page && slug === 'home') {
-    page = homeStatic
-  }
-
-  if (!page) {
+  if (!page || !page.enabled) {
+    console.log({ page, url })
     return <PayloadRedirects url={url} />
   }
 
