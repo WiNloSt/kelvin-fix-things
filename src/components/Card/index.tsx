@@ -8,7 +8,12 @@ import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 
-export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title'>
+export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title' | 'createdAt'>
+
+const dateFormat = new Intl.DateTimeFormat('en-GB', {
+  dateStyle: 'short',
+  timeZone: 'Asia/Bangkok',
+})
 
 export const Card: React.FC<{
   alignItems?: 'center'
@@ -75,6 +80,12 @@ export const Card: React.FC<{
                 {titleToUse}
               </Link>
             </h3>
+          </div>
+        )}
+
+        {doc?.createdAt && (
+          <div className="text-secondary-foreground">
+            {dateFormat.format(new Date(doc.createdAt))}
           </div>
         )}
         {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
