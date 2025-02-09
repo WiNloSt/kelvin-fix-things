@@ -33,6 +33,11 @@ export default async function Page() {
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none">
           <h1>Posts</h1>
+          <p>
+            Hi! Welcome to my blog posts where I publish a fun and hopefully relatable story every
+            week about how I improve my every day live as a househusband, engineer, and soon-to-be
+            father.
+          </p>
         </div>
       </div>
 
