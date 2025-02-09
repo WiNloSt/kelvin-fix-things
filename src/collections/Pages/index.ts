@@ -59,6 +59,11 @@ export const Pages: CollectionConfig<'pages'> = {
   },
   fields: [
     {
+      name: 'enabled',
+      type: 'checkbox',
+      defaultValue: true,
+    },
+    {
       name: 'title',
       type: 'text',
       required: true,

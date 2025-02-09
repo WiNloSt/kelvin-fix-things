@@ -1,5 +1,5 @@
 {
-  "id": "5c79f7a7-87cb-48a3-bd2b-e107747053d2",
+  "id": "b2929089-deed-48a4-afc6-9a36d80d64db",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1014,6 +1014,13 @@
           "type": "serial",
           "primaryKey": true,
           "notNull": true
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
         },
         "title": {
           "name": "title",
@@ -2490,6 +2497,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false
+        },
+        "version_enabled": {
+          "name": "version_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
         },
         "version_title": {
           "name": "version_title",

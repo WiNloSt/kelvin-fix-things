@@ -91,6 +91,7 @@ export interface UserAuthOperations {
  */
 export interface Page {
   id: number;
+  enabled?: boolean | null;
   title: string;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
@@ -932,6 +933,7 @@ export interface PayloadMigration {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
+  enabled?: T;
   title?: T;
   hero?:
     | T
