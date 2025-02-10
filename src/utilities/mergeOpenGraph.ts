@@ -3,12 +3,13 @@ import { getServerSideURL } from './getURL'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  description: 'An open-source website built with Payload and Next.js.',
-  images: [
-    {
-      url: `${getServerSideURL()}/website-template-OG.webp`,
-    },
-  ],
+  description:
+    'A blog posts about how I improve my everyday live as a househusband, engineer, and soon-to-be father.',
+  // images: [
+  //   {
+  //     url: `${getServerSideURL()}/website-template-OG.webp`,
+  //   },
+  // ],
   siteName: 'Kelvin Fix Things',
   title: 'Kelvin Fix Things',
 }
