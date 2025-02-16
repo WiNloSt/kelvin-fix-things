@@ -19,7 +19,7 @@ export const defaultLexical: Config['editor'] = lexicalEditor({
         enabledCollections: ['pages', 'posts'],
         fields: ({ defaultFields }) => {
           const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-            if ('name' in field && field.name === 'url') return false
+            if (field.name === 'url' || field.name === 'doc') return false
             return true
           })
 
@@ -29,7 +29,9 @@ export const defaultLexical: Config['editor'] = lexicalEditor({
               name: 'url',
               type: 'text',
               admin: {
-                condition: ({ linkType }) => linkType !== 'internal',
+                condition: (_, link) => {
+                  return link.linkType !== 'internal'
+                },
               },
               label: ({ t }) => t('fields:enterURL'),
               required: true,
@@ -39,6 +41,19 @@ export const defaultLexical: Config['editor'] = lexicalEditor({
                 }
                 return value ? true : 'URL is required'
               },
+            },
+            // I'm not sure why the default `doc` field doesn't show up
+            {
+              name: 'doc',
+              admin: {
+                condition: (_, link) => {
+                  return link.linkType === 'internal'
+                },
+              },
+              type: 'relationship',
+              filterOptions: null,
+              relationTo: ['pages', 'posts'],
+              required: true,
             },
           ]
         },
