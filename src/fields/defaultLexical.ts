@@ -11,7 +11,6 @@ import {
 export const defaultLexical: Config['editor'] = lexicalEditor({
   features: ({ defaultFeatures }) => {
     return [
-      ...defaultFeatures,
       ParagraphFeature(),
       UnderlineFeature(),
       BoldFeature(),
@@ -59,6 +58,7 @@ export const defaultLexical: Config['editor'] = lexicalEditor({
           ]
         },
       }),
+      ...defaultFeatures,
     ]
   },
 })
