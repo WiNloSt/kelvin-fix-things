@@ -3,12 +3,13 @@ import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
+import { IconHeart, IconHeartFilled } from '@tabler/icons-react'
 
 import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 
-export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title' | 'createdAt'>
+export type CardPostData = Pick<Post, 'id' | 'slug' | 'categories' | 'meta' | 'title' | 'createdAt'>
 
 const dateFormat = new Intl.DateTimeFormat('en-GB', {
   dateStyle: 'short',
@@ -22,9 +23,9 @@ export const Card: React.FC<{
   relationTo?: 'posts'
   showCategories?: boolean
   title?: string
-}> = (props) => {
+  likes?: number
+}> = ({ className, doc, relationTo, showCategories, title: titleFromProps, likes }) => {
   const { card, link } = useClickableCard({})
-  const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 
   const { slug, categories, meta, title } = doc || {}
   const { description, image: metaImage } = meta || {}
@@ -36,10 +37,7 @@ export const Card: React.FC<{
 
   return (
     <article
-      className={cn(
-        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
-        className,
-      )}
+      className={cn('border border-border rounded-lg bg-card hover:cursor-pointer', className)}
       ref={card.ref}
     >
       <div className="relative w-full ">
@@ -85,7 +83,20 @@ export const Card: React.FC<{
 
         {doc?.createdAt && (
           <div className="text-secondary-foreground">
-            {dateFormat.format(new Date(doc.createdAt))}
+            <span>{dateFormat.format(new Date(doc.createdAt))}</span>
+            {likes && likes > 0 ? (
+              <span className="ml-2">
+                <IconHeartFilled size={18} className="inline-block align-text-top" />
+                {likes}
+              </span>
+            ) : (
+              <span className="ml-2 relative">
+                <IconHeart size={18} className="inline-block align-text-top peer" />
+                <div className="text-foreground border rounded px-2 py-1 inline-block bg-background absolute w-[280px] top-[-40px] left-0 -translate-x-1/2 z-10 invisible peer-hover:visible">
+                  Be the first person to like this post!
+                </div>
+              </span>
+            )}
           </div>
         )}
         {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}

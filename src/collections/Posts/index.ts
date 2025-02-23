@@ -27,6 +27,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
 import { columnBlock } from '@/blocks/Column/config'
+import { anyone } from '@/access/anyone'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -163,6 +164,17 @@ export const Posts: CollectionConfig<'posts'> = {
             }),
           ],
         },
+        {
+          label: 'Post Likes',
+          fields: [
+            {
+              name: 'post-likes',
+              type: 'join',
+              collection: 'post-likes-relations',
+              on: 'post',
+            },
+          ],
+        },
       ],
     },
     {
@@ -234,4 +246,36 @@ export const Posts: CollectionConfig<'posts'> = {
     },
     maxPerDoc: 50,
   },
+}
+
+export const PostLikes: CollectionConfig<'post-likes-relations'> = {
+  slug: 'post-likes-relations',
+  access: {
+    create: authenticated,
+    delete: authenticated,
+    read: anyone,
+    update: authenticated,
+  },
+  // This config controls what's populated by default when a post is referenced
+  // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
+  // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'posts'>
+  defaultPopulate: {
+    'user-uuid': true,
+  },
+  admin: {
+    defaultColumns: ['post', 'user-uuid', 'createdAt'],
+  },
+  fields: [
+    {
+      name: 'post',
+      type: 'relationship',
+      relationTo: 'posts',
+      required: true,
+    },
+    {
+      name: 'user-uuid',
+      type: 'text',
+      required: true,
+    },
+  ],
 }

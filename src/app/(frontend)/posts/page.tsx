@@ -1,4 +1,5 @@
 import type { Metadata } from 'next/types'
+import { post_likes_relations as postLikesSchema } from '@/payload-generated-schema'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
@@ -7,6 +8,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
+import { count } from '@payloadcms/db-postgres/drizzle'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
@@ -27,6 +29,22 @@ export default async function Page() {
       createdAt: true,
     },
   })
+
+  const db = payload.db.drizzle
+  const postsLikes = (
+    await db
+      .select({
+        post: postLikesSchema.post,
+        likesCount: count(),
+      })
+      .from(postLikesSchema)
+      .groupBy(postLikesSchema.post)
+  ).reduce((acc, postLike) => {
+    return {
+      ...acc,
+      [postLike.post]: postLike.likesCount,
+    }
+  }, {})
 
   return (
     <div className="pt-24 pb-24">
@@ -51,7 +69,7 @@ export default async function Page() {
         />
       </div>
 
-      <CollectionArchive posts={posts.docs} />
+      <CollectionArchive posts={posts.docs} postsLikes={postsLikes} />
 
       <div className="container">
         {posts.totalPages > 1 && posts.page && (
