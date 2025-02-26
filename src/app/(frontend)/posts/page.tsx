@@ -12,14 +12,14 @@ import { getPostLikes } from '../utils'
 export const dynamic = 'force-static'
 export const revalidate = 600
 
-export const LIMIT = 2
+export const PAGE_LIMIT = 12
 export default async function Page() {
   const payload = await getPayload({ config: configPromise })
 
   const posts = await payload.find({
     collection: 'posts',
     depth: 1,
-    limit: LIMIT,
+    limit: PAGE_LIMIT,
     overrideAccess: false,
     select: {
       title: true,
@@ -50,7 +50,7 @@ export default async function Page() {
         <PageRange
           collection="posts"
           currentPage={posts.page}
-          limit={LIMIT}
+          limit={PAGE_LIMIT}
           totalDocs={posts.totalDocs}
         />
       </div>

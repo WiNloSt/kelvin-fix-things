@@ -8,7 +8,7 @@ import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
 import { notFound } from 'next/navigation'
-import { LIMIT } from '../../page'
+import { PAGE_LIMIT } from '../../page'
 import { getPostLikes } from '@/app/(frontend)/utils'
 
 export const revalidate = 600
@@ -30,7 +30,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const posts = await payload.find({
     collection: 'posts',
     depth: 1,
-    limit: LIMIT,
+    limit: PAGE_LIMIT,
     page: sanitizedPageNumber,
     overrideAccess: false,
   })
