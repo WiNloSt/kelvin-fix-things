@@ -1,5 +1,4 @@
 import type { Metadata } from 'next/types'
-import { post_likes_relations as postLikesSchema } from '@/payload-generated-schema'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
@@ -8,18 +7,19 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
-import { count } from '@payloadcms/db-postgres/drizzle'
+import { getPostLikes } from '../utils'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
 
+export const LIMIT = 2
 export default async function Page() {
   const payload = await getPayload({ config: configPromise })
 
   const posts = await payload.find({
     collection: 'posts',
     depth: 1,
-    limit: 12,
+    limit: LIMIT,
     overrideAccess: false,
     select: {
       title: true,
@@ -30,21 +30,7 @@ export default async function Page() {
     },
   })
 
-  const db = payload.db.drizzle
-  const postsLikes = (
-    await db
-      .select({
-        post: postLikesSchema.post,
-        likesCount: count(),
-      })
-      .from(postLikesSchema)
-      .groupBy(postLikesSchema.post)
-  ).reduce((acc, postLike) => {
-    return {
-      ...acc,
-      [postLike.post]: postLike.likesCount,
-    }
-  }, {})
+  const postsLikes = await getPostLikes(payload)
 
   return (
     <div className="pt-24 pb-24">
@@ -64,7 +50,7 @@ export default async function Page() {
         <PageRange
           collection="posts"
           currentPage={posts.page}
-          limit={12}
+          limit={LIMIT}
           totalDocs={posts.totalDocs}
         />
       </div>

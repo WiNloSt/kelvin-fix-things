@@ -6,6 +6,8 @@ import React from 'react'
 import RichText from '@/components/RichText'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
+import { PostLikes } from '@/collections/Posts'
+import { getPostLikes as getPostsLikes } from '@/app/(frontend)/utils'
 
 export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {
@@ -18,9 +20,8 @@ export const ArchiveBlock: React.FC<
 
   let posts: Post[] = []
 
+  const payload = await getPayload({ config: configPromise })
   if (populateBy === 'collection') {
-    const payload = await getPayload({ config: configPromise })
-
     const flattenedCategories = categories?.map((category) => {
       if (typeof category === 'object') return category.id
       else return category
@@ -52,6 +53,8 @@ export const ArchiveBlock: React.FC<
     }
   }
 
+  const postsLikes = await getPostsLikes(payload)
+
   return (
     <div className="my-16" id={`block-${id}`}>
       {introContent && (
@@ -59,7 +62,7 @@ export const ArchiveBlock: React.FC<
           <RichText className="ml-0 max-w-[48rem]" data={introContent} enableGutter={false} />
         </div>
       )}
-      <CollectionArchive posts={posts} />
+      <CollectionArchive posts={posts} postsLikes={postsLikes} />
     </div>
   )
 }

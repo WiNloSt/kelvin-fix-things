@@ -8,6 +8,8 @@ import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
 import { notFound } from 'next/navigation'
+import { LIMIT } from '../../page'
+import { getPostLikes } from '@/app/(frontend)/utils'
 
 export const revalidate = 600
 
@@ -28,10 +30,12 @@ export default async function Page({ params: paramsPromise }: Args) {
   const posts = await payload.find({
     collection: 'posts',
     depth: 1,
-    limit: 12,
+    limit: LIMIT,
     page: sanitizedPageNumber,
     overrideAccess: false,
   })
+
+  const postsLikes = await getPostLikes(payload)
 
   return (
     <div className="pt-24 pb-24">
@@ -51,7 +55,7 @@ export default async function Page({ params: paramsPromise }: Args) {
         />
       </div>
 
-      <CollectionArchive posts={posts.docs} />
+      <CollectionArchive posts={posts.docs} postsLikes={postsLikes} />
 
       <div className="container">
         {posts?.page && posts?.totalPages > 1 && (

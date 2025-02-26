@@ -7,6 +7,7 @@ import React from 'react'
 import { Search } from '@/search/Component'
 import PageClient from './page.client'
 import { CardPostData } from '@/components/Card'
+import { getPostLikes } from '../utils'
 
 type Args = {
   searchParams: Promise<{
@@ -60,6 +61,8 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       : {}),
   })
 
+  const postsLikes = await getPostLikes(payload)
+
   return (
     <div className="pt-24 pb-24">
       <PageClient />
@@ -74,7 +77,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       </div>
 
       {posts.totalDocs > 0 ? (
-        <CollectionArchive posts={posts.docs as CardPostData[]} />
+        <CollectionArchive posts={posts.docs as CardPostData[]} postsLikes={postsLikes} />
       ) : (
         <div className="container">No results found.</div>
       )}
