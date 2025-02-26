@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: dev/postgres/Dockerfile
     environment:
-      POSTGRES_USER: user
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: postgres
     volumes:
