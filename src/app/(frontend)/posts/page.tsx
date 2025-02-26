@@ -7,12 +7,12 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
-import { getPostLikes } from '../utils'
+import { getPostsLikes } from '../utils'
+import { PAGE_LIMIT } from 'frontend/constants'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
 
-export const PAGE_LIMIT = 12
 export default async function Page() {
   const payload = await getPayload({ config: configPromise })
 
@@ -30,7 +30,7 @@ export default async function Page() {
     },
   })
 
-  const postsLikes = await getPostLikes(payload)
+  const postsLikes = await getPostsLikes(payload)
 
   return (
     <div className="pt-24 pb-24">

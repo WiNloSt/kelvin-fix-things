@@ -7,7 +7,7 @@ import React from 'react'
 import { Search } from '@/search/Component'
 import PageClient from './page.client'
 import { CardPostData } from '@/components/Card'
-import { getPostLikes } from '../utils'
+import { getPostsLikes } from '../utils'
 
 type Args = {
   searchParams: Promise<{
@@ -61,7 +61,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       : {}),
   })
 
-  const postsLikes = await getPostLikes(payload)
+  const postsLikes = await getPostsLikes(payload)
 
   return (
     <div className="pt-24 pb-24">

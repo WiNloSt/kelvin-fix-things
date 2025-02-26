@@ -2,7 +2,7 @@ import { post_likes_relations as postLikesSchema } from '@/payload-generated-sch
 import { count } from '@payloadcms/db-postgres/drizzle'
 import type { BasePayload } from 'payload'
 
-export async function getPostLikes(payload: BasePayload) {
+export async function getPostsLikes(payload: BasePayload) {
   const db = payload.db.drizzle
   return (
     await db

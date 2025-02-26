@@ -6,8 +6,7 @@ import React from 'react'
 import RichText from '@/components/RichText'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
-import { PostLikes } from '@/collections/Posts'
-import { getPostLikes as getPostsLikes } from '@/app/(frontend)/utils'
+import { getPostsLikes } from 'frontend/utils'
 
 export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {

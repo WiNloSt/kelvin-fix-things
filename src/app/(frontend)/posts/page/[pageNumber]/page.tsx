@@ -8,8 +8,8 @@ import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
 import { notFound } from 'next/navigation'
-import { PAGE_LIMIT } from '../../page'
-import { getPostLikes } from '@/app/(frontend)/utils'
+import { PAGE_LIMIT } from 'frontend/constants'
+import { getPostsLikes } from 'frontend/utils'
 
 export const revalidate = 600
 
@@ -35,7 +35,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     overrideAccess: false,
   })
 
-  const postsLikes = await getPostLikes(payload)
+  const postsLikes = await getPostsLikes(payload)
 
   return (
     <div className="pt-24 pb-24">
