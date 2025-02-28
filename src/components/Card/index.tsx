@@ -84,7 +84,7 @@ export const Card: React.FC<{
         {doc?.createdAt && (
           <div className="text-secondary-foreground">
             <span>{dateFormat.format(new Date(doc.createdAt))}</span>
-            {likes && likes > 0 ? (
+            {/* {likes && likes > 0 ? (
               <span className="ml-2">
                 <IconHeartFilled size={18} className="inline-block align-text-top" />
                 {likes}
@@ -96,7 +96,7 @@ export const Card: React.FC<{
                   Be the first person to like this post!
                 </div>
               </span>
-            )}
+            )} */}
           </div>
         )}
         {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
